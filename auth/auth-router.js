@@ -2,8 +2,8 @@ require("dotenv").config();
 
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const db = require("./auth-model.js");
+const generateToken = require("./generateToken.js");
 
 router.post("/register", async (req, res) => {
   let { username, password } = req.body;
@@ -34,16 +34,5 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: "server error" });
   }
 });
-
-function generateToken(user) {
-  const payload = {
-    subject: user.id,
-    username: user.username
-  };
-
-  const options = { expiresIn: "1hr" };
-
-  return jwt.sign(payload, process.env.JWT_SECRET, options);
-}
 
 module.exports = router;
