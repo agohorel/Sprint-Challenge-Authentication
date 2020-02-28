@@ -21,9 +21,10 @@ export const Jokes = () => {
           setJokes(res.data);
           setLoading(false);
         })
-        .catch(() =>
-          setError("you are not authorized to view this page, now scram!")
-        );
+        .catch(() => {
+          setLoading(false);
+          setError("you are not authorized to view this page, now scram!");
+        });
     }, 1000);
 
     return () => {
